@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="employee_view_form">
+            <field name="model">company.employee</field>
+            <field name="inherit" ref="company.employee_view_form"/>
+            <field name="type">form</field>
+            <field name="name">employee_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="employee_view_tree">
+            <field name="model">company.employee</field>
+            <field name="inherit" ref="company.employee_view_tree"/>
+            <field name="type">tree</field>
+            <field name="name">employee_tree</field>
+        </record>
+
+        <record model="ir.action.report" id="report_employee_organigrama">
+            <field name="name">Organigrama</field>
+            <field name="report_name">
+                health_employee_custom.employee_organigrama
+            </field>
+            <field name="model">company.employee</field>
+            <field name="report">health_employee_custom/report.txt</field>
+            <field name="template_extension">txt</field>
+        </record>
+    </data>
+</tryton>
