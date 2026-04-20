@@ -4,12 +4,4 @@
         <label name="cargo"/>
         <field name="cargo"/>
     </xpath>
-    <xpath expr="/form" position="inside">
-        <group col="1" colspan="4" id="organigrama_actions">
-            <button
-                name="download_organigrama"
-                string="Download Organigrama"
-                icon="tryton-print"/>
-        </group>
-    </xpath>
 </data>

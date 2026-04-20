@@ -1,7 +1,7 @@
 import csv
 import io
 
-from trytond.model import ModelView, fields
+from trytond.model import fields
 from trytond.pool import Pool, PoolMeta
 from trytond.report import Report
 
@@ -13,71 +13,72 @@ class Employee(metaclass=PoolMeta):
         'Cargo',
         help='Labor or job title for the employee.')
 
-    @classmethod
-    def __setup__(cls):
-        super().__setup__()
-        cls._buttons.update({
-                'download_organigrama': {},
-                })
-
-    @classmethod
-    @ModelView.button_action(
-        'health_employee_custom.report_employee_organigrama')
-    def download_organigrama(cls, employees):
-        pass
-
 
 class EmployeeOrganigramaReport(Report):
-    __name__ = 'health_employee_custom.employee_organigrama'
+    __name__ = 'health_employee_custom.employee_list'
 
     @classmethod
     def execute(cls, ids, data):
         pool = Pool()
         Employee = pool.get('company.employee')
 
-        employees = Employee.browse(ids)
+        employees = Employee.search([], order=[('id', 'ASC')])
         output = io.StringIO()
         writer = csv.writer(output)
-        writer.writerow([
-                'Nivel',
-                'Empleado',
-                'Cargo',
-                'Empresa',
-                'Supervisor',
-                ])
+        field_names = cls._exportable_field_names(Employee)
+        writer.writerow([cls._field_label(Employee, name) for name in field_names])
 
-        seen = set()
         for employee in employees:
-            cls._append_employee_rows(writer, employee, 0, seen)
+            writer.writerow([
+                    cls._field_value(employee, name) for name in field_names
+                    ])
 
         content = output.getvalue().encode('utf-8-sig')
-        report_name = cls._report_name(employees)
-        return 'csv', content, False, report_name
+        return 'csv', content, False, 'lista_empleados'
 
     @classmethod
-    def _append_employee_rows(cls, writer, employee, level, seen):
-        if employee.id in seen:
-            return
-        seen.add(employee.id)
-        writer.writerow([
-                level,
-                employee.rec_name or '',
-                employee.cargo or '',
-                employee.company.rec_name if employee.company else '',
-                employee.supervisor.rec_name if employee.supervisor else '',
-                ])
+    def _exportable_field_names(cls, Employee):
+        excluded_types = (
+            fields.Binary,
+            fields.Function,
+            fields.One2Many,
+            fields.Many2Many,
+        )
+        preferred = [
+            'id',
+            'rec_name',
+            'party',
+            'company',
+            'supervisor',
+            'cargo',
+            'active',
+        ]
+        available = []
+        for name, field in Employee._fields.items():
+            if isinstance(field, excluded_types):
+                continue
+            available.append(name)
 
-        subordinates = sorted(
-            employee.subordinates or [],
-            key=lambda subordinate: subordinate.rec_name or '')
-        for subordinate in subordinates:
-            cls._append_employee_rows(writer, subordinate, level + 1, seen)
+        ordered = [name for name in preferred if name in available]
+        ordered.extend(sorted(name for name in available if name not in ordered))
+        return ordered
 
     @staticmethod
-    def _report_name(employees):
-        if not employees:
-            return 'organigrama_empleados'
-        if len(employees) == 1:
-            base_name = employees[0].rec_name or 'empleado'
-            return 'organigrama_%s' % base_name.replace(' ', '_')
-        return 'organigrama_empleados'
+    def _field_label(Employee, name):
+        if name == 'id':
+            return 'ID'
+        if name == 'rec_name':
+            return 'Nombre'
+        field = Employee._fields[name]
+        return field.string or name
+
+    @staticmethod
+    def _field_value(employee, name):
+        value = getattr(employee, name, None)
+        if value is None:
+            return ''
+        if hasattr(value, 'rec_name'):
+            return value.rec_name or ''
+        if isinstance(value, bool):
+            return 'Si' if value else 'No'
+        return value
