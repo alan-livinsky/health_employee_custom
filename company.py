@@ -16,6 +16,14 @@ class Employee(metaclass=PoolMeta):
 
 class EmployeeOrganigramaReport(Report):
     __name__ = 'health_employee_custom.employee_list'
+    EXPORT_FIELDS = [
+        'party',
+        'cargo',
+        'company',
+        'supervisor',
+        'start_date',
+        'end_date',
+    ]
 
     @classmethod
     def execute(cls, ids, data):
@@ -38,37 +46,10 @@ class EmployeeOrganigramaReport(Report):
 
     @classmethod
     def _exportable_field_names(cls, Employee):
-        excluded_types = (
-            fields.Binary,
-            fields.Function,
-            fields.One2Many,
-            fields.Many2Many,
-        )
-        preferred = [
-            'id',
-            'rec_name',
-            'party',
-            'company',
-            'supervisor',
-            'cargo',
-            'active',
-        ]
-        available = []
-        for name, field in Employee._fields.items():
-            if isinstance(field, excluded_types):
-                continue
-            available.append(name)
-
-        ordered = [name for name in preferred if name in available]
-        ordered.extend(sorted(name for name in available if name not in ordered))
-        return ordered
+        return [name for name in cls.EXPORT_FIELDS if name in Employee._fields]
 
     @staticmethod
     def _field_label(Employee, name):
-        if name == 'id':
-            return 'ID'
-        if name == 'rec_name':
-            return 'Nombre'
         field = Employee._fields[name]
         return field.string or name
 
