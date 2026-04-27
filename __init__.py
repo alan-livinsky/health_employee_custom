@@ -6,7 +6,7 @@ from . import company
 def register():
     Pool.register(
         company.Employee,
-        module='z _health_employee_custom', type_='model')
+        module='z_health_employee_custom', type_='model')
     Pool.register(
         company.EmployeeOrganigramaReport,
-        module='z _health_employee_custom', type_='report')
+        module='z_health_employee_custom', type_='report')
