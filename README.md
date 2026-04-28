@@ -1,4 +1,4 @@
-# health_employee_custom
+# z_health_employee_custom
 
 Custom Tryton 6.0 module to extend `company.employee`.
 
@@ -8,23 +8,34 @@ Custom Tryton 6.0 module to extend `company.employee`.
 - Adds a model report action called `Descargar lista de empleados`.
 - Downloads a CSV with all employee records and their direct data.
 
-## Module structure
+## Local pip install
 
-Copy the `health_employee_custom` directory into your Tryton modules path.
+From a Python 3.10 environment, install the module from this directory:
+
+```bash
+python -m pip install .
+```
+
+For editable local development:
+
+```bash
+python -m pip install -e .
+```
 
 ## Activate or update
 
-1. Add the module path to your `trytond.conf` if needed.
-2. Update the database:
+1. Update the database:
 
    ```bash
-   trytond-admin -d <database> -u health_employee_custom
+   trytond-admin -d <database> -u z_health_employee_custom
    ```
 
-3. Restart `trytond`.
+2. Restart `trytond`.
 
 ## Notes
 
 - The CSV is generated from all `company.employee` records.
 - It exports direct employee fields and renders relations like company,
   party and supervisor using their display names.
+- The install exposes the module through the `trytond.modules` entry point,
+  so you do not need to copy it manually into a modules path.

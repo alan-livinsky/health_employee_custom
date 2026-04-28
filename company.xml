@@ -15,9 +15,9 @@
 
         <record model="ir.action.report" id="report_employee_organigrama">
             <field name="name">Descargar lista de empleados</field>
-            <field name="report_name">health_employee_custom.employee_list</field>
+            <field name="report_name">z_health_employee_custom.employee_list</field>
             <field name="model">company.employee</field>
-            <field name="report">health_employee_custom/report.txt</field>
+            <field name="report">z_health_employee_custom/report.txt</field>
             <field name="template_extension">txt</field>
         </record>
 

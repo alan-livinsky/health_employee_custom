@@ -15,7 +15,7 @@ class Employee(metaclass=PoolMeta):
 
 
 class EmployeeOrganigramaReport(Report):
-    __name__ = 'health_employee_custom.employee_list'
+    __name__ = 'z_health_employee_custom.employee_list'
     EXPORT_FIELDS = [
         'party',
         'cargo',

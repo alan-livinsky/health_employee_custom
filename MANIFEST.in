@@ -1,0 +1,5 @@
+include README.md
+include tryton.cfg
+include company.xml
+include report.txt
+recursive-include view *.xml
