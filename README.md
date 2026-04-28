@@ -1,4 +1,4 @@
-# z_health_employee_custom
+# z_health_employee
 
 Custom Tryton 6.0 module to extend `company.employee`.
 
@@ -27,7 +27,7 @@ python -m pip install -e .
 1. Update the database:
 
    ```bash
-   trytond-admin -d <database> -u z_health_employee_custom
+   trytond-admin -d <database> -u z_health_employee
    ```
 
 2. Restart `trytond`.

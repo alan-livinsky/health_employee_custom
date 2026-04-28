@@ -3,7 +3,7 @@ from pathlib import Path
 from setuptools import setup
 
 
-MODULE_NAME = "z_health_employee_custom"
+MODULE_NAME = "z_health_employee"
 PACKAGE_NAME = f"trytond.modules.{MODULE_NAME}"
 BASE_DIR = Path(__file__).parent
 
