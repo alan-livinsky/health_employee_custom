@@ -21,10 +21,14 @@
             <field name="template_extension">txt</field>
         </record>
 
-        <record model="ir.action.keyword" id="report_employee_organigrama_keyword">
-            <field name="keyword">form_print</field>
-            <field name="model">company.employee,-1</field>
-            <field name="action" ref="report_employee_organigrama"/>
-        </record>
+        <menuitem id="menu_company_employee_reports"
+            name="Reportes"
+            parent="company.menu_company"
+            sequence="90"/>
+
+        <menuitem id="menu_company_employee_organigrama_report"
+            parent="menu_company_employee_reports"
+            action="report_employee_organigrama"
+            sequence="10"/>
     </data>
 </tryton>

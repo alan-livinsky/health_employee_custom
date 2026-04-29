@@ -9,7 +9,7 @@ Módulo personalizado para **Tryton 6.0** que extiende el modelo `company.employ
 Este módulo amplía el modelo estándar de empleados de Tryton agregando:
 
 - Un campo **Cargo** visible en la vista formulario (antes del supervisor) y en la vista lista (después del nombre del tercero).
-- Una acción de reporte **"Descargar lista de empleados"** disponible en el menú de impresión del formulario de empleados, que genera un archivo CSV con todos los registros.
+- Un acceso de reporte **"Descargar lista de empleados"** disponible en el menú lateral de **Empresa > Reportes**, que genera un archivo CSV con todos los registros.
 
 El módulo se instala como paquete Python y se registra automáticamente en Tryton mediante el mecanismo de *entry points*, sin necesidad de copiar archivos manualmente.
 
@@ -21,7 +21,7 @@ El módulo se instala como paquete Python y se registra automáticamente en Tryt
 z_health_employee_custom/
 ├── __init__.py          # Registro de modelos y reportes en el Pool de Tryton
 ├── company.py           # Extensión del modelo Employee y clase del reporte CSV
-├── company.xml          # Definición de vistas, reporte y acción de teclado
+├── company.xml          # Definición de vistas, reporte y menús
 ├── tryton.cfg           # Configuración del módulo (versión y dependencias)
 ├── report.txt           # Plantilla vacía requerida por la acción de reporte
 ├── setup.py             # Configuración de empaquetado con setuptools
@@ -49,7 +49,7 @@ z_health_employee_custom/
 - **Nombre interno:** `z_health_employee.employee_list`
 - **Formato de salida:** CSV codificado en UTF-8 con BOM (`utf-8-sig`) para compatibilidad con Excel.
 - **Nombre del archivo descargado:** `lista_empleados.csv`
-- **Acceso:** menú de impresión (`Imprimir`) dentro del formulario o lista de empleados.
+- **Acceso:** menú lateral en **Empresa > Reportes > Descargar lista de empleados**.
 - **Campos exportados** (en el orden definido en `EXPORT_FIELDS`):
 
 | Campo        | Descripción                                      |
