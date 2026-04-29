@@ -1,41 +1,41 @@
 # z_health_employee
 
-Custom Tryton 6.0 module to extend `company.employee`.
+Módulo personalizado de Tryton 6.0 para extender `company.employee`.
 
-## Features
+## Funcionalidades
 
-- Adds a `Cargo` field on employees.
-- Adds a model report action called `Descargar lista de empleados`.
-- Downloads a CSV with all employee records and their direct data.
+- Agrega un campo `Cargo` en los empleados.
+- Agrega una acción de reporte llamada `Descargar lista de empleados`.
+- Descarga un CSV con todos los registros de empleados y sus datos directos.
 
-## Local pip install
+## Instalación local con pip
 
-From a Python 3.10 environment, install the module from this directory:
+Desde un entorno de Python 3.10, instalar el módulo desde este directorio:
 
 ```bash
 python -m pip install .
 ```
 
-For editable local development:
+Para desarrollo local en modo editable:
 
 ```bash
 python -m pip install -e .
 ```
 
-## Activate or update
+## Activar o actualizar
 
-1. Update the database:
+1. Actualizar la base de datos:
 
    ```bash
    trytond-admin -d <database> -u z_health_employee
    ```
 
-2. Restart `trytond`.
+2. Reiniciar `trytond`.
 
-## Notes
+## Notas
 
-- The CSV is generated from all `company.employee` records.
-- It exports direct employee fields and renders relations like company,
-  party and supervisor using their display names.
-- The install exposes the module through the `trytond.modules` entry point,
-  so you do not need to copy it manually into a modules path.
+- El CSV se genera a partir de todos los registros de `company.employee`.
+- Exporta los campos directos del empleado y renderiza relaciones como empresa,
+  tercero y supervisor usando sus nombres de visualización.
+- La instalación expone el módulo a través del entry point `trytond.modules`,
+  por lo que no es necesario copiarlo manualmente a la carpeta de módulos.
